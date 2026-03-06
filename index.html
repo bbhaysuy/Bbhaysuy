@@ -6,8 +6,6 @@
 <meta charset="UTF-8">
 <title>Bao Bao ツ</title>
 
-<!-- favicon icon -->
-
 <link rel="icon" href="icon.png">
 
 <style>
@@ -26,7 +24,35 @@ color:white;
 overflow-x:hidden;
 }
 
-/* PARTICLE BACKGROUND */
+/* LOADING SCREEN */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#loader h1{
+color:#6fb3ff;
+font-size:60px;
+letter-spacing:6px;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{opacity:0.3;}
+50%{opacity:1;}
+100%{opacity:0.3;}
+}
+
+/* PARTICLES */
 
 canvas{
 position:fixed;
@@ -35,7 +61,21 @@ left:0;
 z-index:-1;
 }
 
-/* HEADER BAR */
+/* CURSOR */
+
+.cursor{
+position:fixed;
+width:15px;
+height:15px;
+background:#6fb3ff;
+border-radius:50%;
+pointer-events:none;
+box-shadow:0 0 20px #1e90ff;
+transform:translate(-50%,-50%);
+z-index:999;
+}
+
+/* HEADER */
 
 .topbar{
 position:fixed;
@@ -46,7 +86,7 @@ padding:20px 40px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(0,0,0,0.8);
+background:rgba(0,0,0,0.85);
 z-index:1000;
 }
 
@@ -110,7 +150,7 @@ color:#6fb3ff;
 text-shadow:0 0 20px #1e90ff;
 }
 
-/* SECTION */
+/* SECTIONS */
 
 section{
 padding:120px 20px;
@@ -125,7 +165,7 @@ letter-spacing:4px;
 margin-bottom:30px;
 }
 
-/* VIDEO */
+/* VIDEOS */
 
 .videos{
 display:flex;
@@ -141,7 +181,7 @@ border:none;
 border-radius:10px;
 }
 
-/* PHOTOS */
+/* GALLERY */
 
 .gallery{
 display:grid;
@@ -152,6 +192,14 @@ gap:20px;
 .gallery img{
 width:100%;
 border-radius:10px;
+transition:0.5s;
+filter:brightness(80%);
+}
+
+.gallery img:hover{
+transform:scale(1.08);
+filter:brightness(100%);
+box-shadow:0 0 30px #1e90ff;
 }
 
 /* SOCIAL */
@@ -182,7 +230,13 @@ color:#555;
 
 <body>
 
+<div id="loader">
+<h1>Bao Bao ツ</h1>
+</div>
+
 <canvas id="stars"></canvas>
+
+<div class="cursor"></div>
 
 <!-- HEADER -->
 
@@ -198,7 +252,7 @@ color:#555;
 
 <div class="menu" id="menu">
 
-<a href="#about">BIOGRAPHY</a> <a href="#music">MUSIC</a> <a href="#photos">PHOTOS</a> <a href="#social">SOCIAL</a>
+<a href="#about">□</a> <a href="#music">MUSIC</a> <a href="#photos">PHOTOS</a> <a href="#social">SOCIAL</a>
 
 </div>
 
@@ -214,7 +268,7 @@ color:#555;
 
 <section id="about">
 
-<h2>▢</h2>
+<h2>□</h2>
 
 <p>Người hài hước tim đầy vết xước.</p>
 
@@ -274,39 +328,54 @@ color:#555;
 
 <script>
 
+/* LOADER */
+
+window.addEventListener("load",function(){
+setTimeout(()=>{
+document.getElementById("loader").style.display="none"
+},1500)
+})
+
 /* MENU */
 
 function toggleMenu(){
 
-let menu = document.getElementById("menu")
+let menu=document.getElementById("menu")
 
-if(menu.style.right == "0px"){
-menu.style.right = "-300px"
+if(menu.style.right=="0px"){
+menu.style.right="-300px"
 }else{
-menu.style.right = "0px"
+menu.style.right="0px"
 }
 
 }
 
-/* STAR BACKGROUND */
+/* CURSOR */
 
-const canvas = document.getElementById("stars")
-const ctx = canvas.getContext("2d")
+const cursor=document.querySelector(".cursor")
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px"
+cursor.style.top=e.clientY+"px"
+})
 
-let stars = []
+/* PARTICLES */
 
-for(let i=0;i<120;i++){
+const canvas=document.getElementById("stars")
+const ctx=canvas.getContext("2d")
 
-stars.push({
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
+let particles=[]
+
+for(let i=0;i<160;i++){
+
+particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
-speed:Math.random()*0.3
-
+speed:Math.random()*0.2
 })
 
 }
@@ -317,16 +386,16 @@ ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
 
-stars.forEach(star=>{
+particles.forEach(p=>{
 
-star.y+=star.speed
+p.y+=p.speed
 
-if(star.y>canvas.height){
-star.y=0
+if(p.y>canvas.height){
+p.y=0
 }
 
 ctx.beginPath()
-ctx.arc(star.x,star.y,star.size,0,Math.PI*2)
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2)
 ctx.fill()
 
 })
