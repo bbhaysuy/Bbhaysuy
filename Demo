@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bao Bao ツ</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#000;
+color:white;
+}
+
+/* MENU */
+
+nav{
+position:fixed;
+top:20px;
+right:40px;
+z-index:100;
+}
+
+nav a{
+color:#6fb3ff;
+text-decoration:none;
+margin-left:20px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+nav a:hover{
+color:#a8d0ff;
+}
+
+/* HERO */
+
+header{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:linear-gradient(#000000cc,#000000cc),url('hero.jpg') center/cover;
+}
+
+header h1{
+font-size:70px;
+color:#6fb3ff;
+}
+
+/* SECTIONS */
+
+section{
+padding:100px 20px;
+text-align:center;
+}
+
+h2{
+color:#6fb3ff;
+letter-spacing:3px;
+}
+
+/* VIDEOS */
+
+.videos{
+display:flex;
+flex-wrap:wrap;
+gap:30px;
+justify-content:center;
+margin-top:40px;
+}
+
+iframe{
+width:420px;
+height:235px;
+border:none;
+}
+
+/* SOCIAL */
+
+.social a{
+display:block;
+margin:10px;
+color:#6fb3ff;
+text-decoration:none;
+}
+
+.social a:hover{
+color:#a8d0ff;
+}
+
+footer{
+padding:40px;
+text-align:center;
+color:#777;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- MENU -->
+
+<nav>
+<a href="#about">BIOGRAPHY</a>
+<a href="#music">MUSIC</a>
+<a href="#photos">PHOTOS</a>
+<a href="#social">SOCIAL</a>
+</nav>
+
+<!-- HERO -->
+
+<header>
+<h1>Bao Bao ツ</h1>
+</header>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<h2>BIOGRAPHY</h2>
+
+<p>Người hài hước tim đầy vết xước.</p>
+
+<p>Welcome to my personal space.</p>
+
+</section>
+
+<!-- MUSIC -->
+
+<section id="music">
+
+<h2>MUSIC I LIKE</h2>
+
+<div class="videos">
+
+<iframe src="https://www.youtube.com/embed/videoseries?list=PLGb8ItTdj4C3BhiTtyLT0c3xaRGQVIfeB"></iframe>
+
+<iframe src="https://www.youtube.com/embed/videoseries?list=PLGb8ItTdj4C0-lJJJAgXZO_H9Or7RRJ7r"></iframe>
+
+</div>
+
+</section>
+
+<!-- PHOTOS -->
+
+<section id="photos">
+
+<h2>PHOTOS</h2>
+
+<p>Add your photography or artwork here.</p>
+
+</section>
+
+<!-- SOCIAL -->
+
+<section id="social">
+
+<h2>SOCIAL</h2>
+
+<div class="social">
+
+<a href="https://www.facebook.com/nho.bao.9484941">Facebook</a>
+
+<a href="https://www.instagram.com/baobaonenye/">Instagram</a>
+
+<a href="https://www.threads.com/@baobaonenye">Threads</a>
+
+<a href="https://youtube.com/@baobaone661">YouTube</a>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>© Bao Bao ツ</p>
+
+</footer>
+
+</body>
+</html>
