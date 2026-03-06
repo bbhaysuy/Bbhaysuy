@@ -1,36 +1,96 @@
 <!DOCTYPE html>
+
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Bao Bao ツ</title>
 
+<!-- favicon icon -->
+
+<link rel="icon" href="icon.png">
+
 <style>
 
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
 font-family:Arial, sans-serif;
 background:#000;
 color:white;
+overflow-x:hidden;
 }
 
-/* MENU */
+/* PARTICLE BACKGROUND */
 
-nav{
+canvas{
 position:fixed;
-top:20px;
-right:40px;
-z-index:100;
+top:0;
+left:0;
+z-index:-1;
 }
 
-nav a{
+/* HEADER BAR */
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+padding:20px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.8);
+z-index:1000;
+}
+
+/* LOGO */
+
+.logo{
 color:#6fb3ff;
-text-decoration:none;
-margin-left:20px;
+font-size:22px;
+letter-spacing:3px;
 font-weight:bold;
-letter-spacing:2px;
 }
 
-nav a:hover{
+/* MENU BUTTON */
+
+.menu-btn{
+font-size:28px;
+cursor:pointer;
+color:#6fb3ff;
+}
+
+/* SIDE MENU */
+
+.menu{
+position:fixed;
+top:0;
+right:-300px;
+width:300px;
+height:100vh;
+background:black;
+padding-top:120px;
+transition:0.4s;
+text-align:center;
+}
+
+.menu a{
+display:block;
+margin:30px;
+font-size:22px;
+text-decoration:none;
+color:#6fb3ff;
+letter-spacing:3px;
+}
+
+.menu a:hover{
 color:#a8d0ff;
 }
 
@@ -42,59 +102,78 @@ display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
-background:linear-gradient(#000000cc,#000000cc),url('hero.jpg') center/cover;
 }
 
 header h1{
 font-size:70px;
 color:#6fb3ff;
+text-shadow:0 0 20px #1e90ff;
 }
 
-/* SECTIONS */
+/* SECTION */
 
 section{
-padding:100px 20px;
+padding:120px 20px;
 text-align:center;
+max-width:900px;
+margin:auto;
 }
 
 h2{
 color:#6fb3ff;
-letter-spacing:3px;
+letter-spacing:4px;
+margin-bottom:30px;
 }
 
-/* VIDEOS */
+/* VIDEO */
 
 .videos{
 display:flex;
 flex-wrap:wrap;
 gap:30px;
 justify-content:center;
-margin-top:40px;
 }
 
 iframe{
-width:420px;
-height:235px;
+width:360px;
+height:200px;
 border:none;
+border-radius:10px;
+}
+
+/* PHOTOS */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.gallery img{
+width:100%;
+border-radius:10px;
 }
 
 /* SOCIAL */
 
 .social a{
 display:block;
-margin:10px;
-color:#6fb3ff;
+margin:12px;
 text-decoration:none;
+color:#6fb3ff;
+font-size:18px;
 }
 
 .social a:hover{
 color:#a8d0ff;
 }
 
+/* FOOTER */
+
 footer{
 padding:40px;
 text-align:center;
-color:#777;
+color:#555;
 }
 
 </style>
@@ -103,30 +182,41 @@ color:#777;
 
 <body>
 
+<canvas id="stars"></canvas>
+
+<!-- HEADER -->
+
+<div class="topbar">
+
+<div class="logo">Bao Bao ツ</div>
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+</div>
+
 <!-- MENU -->
 
-<nav>
-<a href="#about">BIOGRAPHY</a>
-<a href="#music">MUSIC</a>
-<a href="#photos">PHOTOS</a>
-<a href="#social">SOCIAL</a>
-</nav>
+<div class="menu" id="menu">
+
+<a href="#about">BIOGRAPHY</a> <a href="#music">MUSIC</a> <a href="#photos">PHOTOS</a> <a href="#social">SOCIAL</a>
+
+</div>
 
 <!-- HERO -->
 
 <header>
+
 <h1>Bao Bao ツ</h1>
+
 </header>
 
-<!-- ABOUT -->
+<!-- BIO -->
 
 <section id="about">
 
 <h2>BIOGRAPHY</h2>
 
 <p>Người hài hước tim đầy vết xước.</p>
-
-<p>Welcome to my personal space.</p>
 
 </section>
 
@@ -152,7 +242,13 @@ color:#777;
 
 <h2>PHOTOS</h2>
 
-<p>Add your photography or artwork here.</p>
+<div class="gallery">
+
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpg">
+
+</div>
 
 </section>
 
@@ -164,13 +260,7 @@ color:#777;
 
 <div class="social">
 
-<a href="https://www.facebook.com/nho.bao.9484941">Facebook</a>
-
-<a href="https://www.instagram.com/baobaonenye/">Instagram</a>
-
-<a href="https://www.threads.com/@baobaonenye">Threads</a>
-
-<a href="https://youtube.com/@baobaone661">YouTube</a>
+<a href="https://www.facebook.com/nho.bao.9484941">Facebook</a> <a href="https://www.instagram.com/baobaonenye/">Instagram</a> <a href="https://www.threads.com/@baobaonenye">Threads</a> <a href="https://youtube.com/@baobaone661">YouTube</a>
 
 </div>
 
@@ -178,9 +268,76 @@ color:#777;
 
 <footer>
 
-<p>© Bao Bao ツ</p>
+© Bao Bao ツ
 
 </footer>
+
+<script>
+
+/* MENU */
+
+function toggleMenu(){
+
+let menu = document.getElementById("menu")
+
+if(menu.style.right == "0px"){
+menu.style.right = "-300px"
+}else{
+menu.style.right = "0px"
+}
+
+}
+
+/* STAR BACKGROUND */
+
+const canvas = document.getElementById("stars")
+const ctx = canvas.getContext("2d")
+
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+let stars = []
+
+for(let i=0;i<120;i++){
+
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+speed:Math.random()*0.3
+
+})
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(star=>{
+
+star.y+=star.speed
+
+if(star.y>canvas.height){
+star.y=0
+}
+
+ctx.beginPath()
+ctx.arc(star.x,star.y,star.size,0,Math.PI*2)
+ctx.fill()
+
+})
+
+requestAnimationFrame(animate)
+
+}
+
+animate()
+
+</script>
 
 </body>
 </html>
